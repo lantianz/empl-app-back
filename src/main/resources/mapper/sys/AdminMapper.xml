@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ltz.emplInfo.sys.mapper.AdminMapper">
+    <select id="getRoleByUserId" parameterType="Integer" resultType="String">
+        SELECT
+            b.role_name
+        FROM admin_role a, t_role b
+        WHERE
+            a.role_id = b.role_id
+          AND a.employee_id = #{userId}
+    </select>
+</mapper>
