@@ -34,7 +34,13 @@
 <!--    编辑并更新-->
     <update id="editById" parameterType="com.ltz.emplInfo.sys.entity.Graduate">
         UPDATE graduate
-        SET name = #{name}, gender = #{gender}, department = #{department}, major = #{major}, grade = #{grade}, username = #{username}, password = #{password}
+        SET name = #{name},
+            gender = #{gender},
+            department = #{department},
+            major = #{major},
+            grade = #{grade},
+            username = #{username},
+            password = IFNULL (#{password}, password)
         WHERE student_id = #{studentId}
     </update>
 </mapper>
