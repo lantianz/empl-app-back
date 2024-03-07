@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.ltz.emplInfo.common.vo.Result;
 import com.ltz.emplInfo.sys.entity.Admin;
+import com.ltz.emplInfo.sys.entity.Role;
 import com.ltz.emplInfo.sys.mapper.AdminMapper;
 import com.ltz.emplInfo.sys.service.IAdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -37,7 +38,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         Admin loginAdmin = this.baseMapper.selectOne(wrapper);
         // 结果不为空，生成token，并将信息存入redis
         if(loginAdmin != null){
-            // 暂时用UUID，终极方案是jwt
+            // UUID
             String key = "admin:" + UUID.randomUUID();
 
             // 存入redis
@@ -59,11 +60,13 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         if(obj != null){
             Admin loginAdmin = JSON.parseObject(JSON.toJSONString(obj), Admin.class);
             Map<String, Object> data = new HashMap<>();
-            data.put("name", loginAdmin.getUsername());
-
+            data.put("jobId", loginAdmin.getJobId());
+            data.put("name", loginAdmin.getName());
+            data.put("phone", loginAdmin.getPhone());
+            data.put("username", loginAdmin.getUsername());
             // 获取角色等级
-            List<String> roleList = this.baseMapper.getRoleByUserId(loginAdmin.getEmployeeId());
-            data.put("role", roleList);
+            Role roles = this.baseMapper.getRoleByUserId(loginAdmin.getAdminId());
+            data.put("role", roles);
 
             return data;
         }

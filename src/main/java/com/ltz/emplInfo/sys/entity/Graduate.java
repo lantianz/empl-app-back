@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author tianzhi
@@ -14,6 +14,7 @@ public class Graduate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Integer id;
     private Integer studentId;
 
     private String name;
@@ -29,6 +30,14 @@ public class Graduate implements Serializable {
     private String username;
 
     private String password;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getStudentId() {
         return studentId;
@@ -97,14 +106,15 @@ public class Graduate implements Serializable {
     @Override
     public String toString() {
         return "Graduate{" +
-            "studentId = " + studentId +
-            ", name = " + name +
-            ", gender = " + gender +
-            ", department = " + department +
-            ", major = " + major +
-            ", grade = " + grade +
-            ", username = " + username +
-            ", password = " + password +
-        "}";
+                "id=" + id +
+                ", studentId=" + studentId +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", department='" + department + '\'' +
+                ", major='" + major + '\'' +
+                ", grade='" + grade + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

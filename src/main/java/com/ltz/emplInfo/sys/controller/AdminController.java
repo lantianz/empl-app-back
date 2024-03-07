@@ -2,7 +2,9 @@ package com.ltz.emplInfo.sys.controller;
 
 import com.ltz.emplInfo.common.vo.Result;
 import com.ltz.emplInfo.sys.entity.Admin;
+import com.ltz.emplInfo.sys.entity.Permission;
 import com.ltz.emplInfo.sys.service.IAdminService;
+import com.ltz.emplInfo.sys.service.IPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -19,10 +21,11 @@ import java.util.Map;
  * @since 2024-02-04
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/admin")
 public class AdminController {
     @Autowired
     private IAdminService adminService;
+    private PermissionController permissionController;
 
     @GetMapping("/all")
     public Result<List<Admin>> getAllAdmin(){
@@ -35,8 +38,9 @@ public class AdminController {
         Map<String,Object> data = adminService.login(admin);
         if(data != null){
             return Result.success(data);
+        } else {
+            return Result.fail(20002,"用户名or密码错误");
         }
-        return Result.fail(20002,"用户名or密码错误");
     }
 
     @GetMapping("/info")
@@ -45,12 +49,13 @@ public class AdminController {
         Map<String, Object> data = adminService.getAdminInfo(token);
         if(data!=null){
             return Result.success(data);
+        } else {
+            return Result.fail(20003,"登录信息失效，请重新登录");
         }
-        return Result.fail(20003,"获取信息失败");
     }
 
     @PostMapping("/logout")
-    public Result<?> logout(@RequestHeader("X-Token") String token){
+    public Result<?> logout(@RequestHeader("A-Token") String token){
         adminService.logout(token);
         return Result.success();
     }

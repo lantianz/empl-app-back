@@ -1,26 +1,22 @@
 package com.ltz.emplInfo.sys.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-
 import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author tianzhi
  * @since 2024-02-04
  */
-@TableName("admin")
 public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer employeeId;
+    private Integer adminId;
 
+    private Integer jobId;
     private String name;
 
     private String phone;
@@ -29,12 +25,20 @@ public class Admin implements Serializable {
 
     private String password;
 
-    public Integer getEmployeeId() {
-        return employeeId;
+    public Integer getAdminId() {
+        return adminId;
     }
 
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
+    }
+
+    public Integer getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
     }
 
     public String getName() {
@@ -71,12 +75,13 @@ public class Admin implements Serializable {
 
     @Override
     public String toString() {
-        return "AdminCopy1{" +
-                "employeeId = " + employeeId +
-                ", name = " + name +
-                ", phone = " + phone +
-                ", username = " + username +
-                ", password = " + password +
-                "}";
+        return "Admin{" +
+                "adminId=" + adminId +
+                ", jobId=" + jobId +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

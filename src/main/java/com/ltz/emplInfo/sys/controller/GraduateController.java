@@ -30,7 +30,6 @@ public class GraduateController {
     public Result<List<Graduate>> getAllGraduateByPage(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
         List<Graduate> allGraduates = graduateService.getAllGraduate(); // 获取全部毕业生数据(除了密码)
         // List<Graduate> allGraduates = graduateService.list();   // 获取全部毕业生数据
-
         // 计算当前页的起始索引和结束索引
         int startIndex = (pageNum - 1) * pageSize;
         int endIndex = Math.min(startIndex + pageSize, allGraduates.size());
@@ -63,9 +62,9 @@ public class GraduateController {
         }
     }
 
-    @DeleteMapping("/deleteUser")
-    public Result<String> deleteGraduate(@RequestParam(("deleteId")) int deleteId) {
-        boolean deleted = graduateService.deleteById(deleteId);
+    @DeleteMapping("/deleteUser/{id}")
+    public Result<String> deleteGraduate(@PathVariable("id") int id) {
+        boolean deleted = graduateService.deleteById(id);
         if (deleted) {
             return Result.success("删除毕业生成功");
         } else {

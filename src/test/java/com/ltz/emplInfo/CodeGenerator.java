@@ -16,7 +16,7 @@ public class CodeGenerator
         String password = "123456";
         String moduleName = "sys";
         String mapperLocation = "D:\\IdeaProjects\\emplInfo\\src\\main\\resources\\mapper\\" + moduleName;
-        String tables = "admin,admin_role,employminfo,graduate,t_role,stand_info";
+        String tables = "admin,empl_info,graduate,stand_info,permission";   //admin_role role
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> {
                     builder.author("tianzhi") // 设置作者

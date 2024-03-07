@@ -2,6 +2,7 @@ package com.ltz.emplInfo.sys.mapper;
 
 import com.ltz.emplInfo.sys.entity.Admin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ltz.emplInfo.sys.entity.Role;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ import java.util.List;
  * @since 2024-02-04
  */
 public interface AdminMapper extends BaseMapper<Admin> {
-    List<String> getRoleByUserId(Integer userId);
+    Role getRoleByUserId(Integer adminId);
 }
