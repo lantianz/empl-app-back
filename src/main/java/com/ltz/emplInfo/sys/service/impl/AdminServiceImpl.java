@@ -30,7 +30,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     private RedisTemplate redisTemplate;
 
     @Override
-    public Map<String, Object> login(Admin admin) {
+    public String login(Admin admin) {
         // 根据用户名和密码查询
         LambdaQueryWrapper<Admin> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Admin::getUsername,admin.getUsername());
@@ -46,9 +46,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
             redisTemplate.opsForValue().set(key, loginAdmin,30, TimeUnit.MINUTES);
 
             // 返回数据
-            Map<String, Object> data = new HashMap<>();
-            data.put("token", key);
-            return data;
+            return key;
         }
         return null;
     }

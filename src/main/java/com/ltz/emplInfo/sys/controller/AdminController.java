@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,22 +36,14 @@ public class AdminController {
 
     @PostMapping("/login")
     public Result<Map<String,Object>> login(@RequestBody Admin admin){
-        Map<String,Object> data = adminService.login(admin);
-        if(data != null){
+        Map<String,Object> data = new HashMap<>();
+        String token = adminService.login(admin);
+        data.put("token",token);
+        if (token != null) {
+            data.put("info", adminService.getAdminInfo(token));
             return Result.success(data);
         } else {
             return Result.fail(20002,"用户名or密码错误");
-        }
-    }
-
-    @GetMapping("/info")
-    public Result<?> getAdminInfo(@RequestHeader("A-Token")  String token){
-        // 根据token获取用户信息，redis
-        Map<String, Object> data = adminService.getAdminInfo(token);
-        if(data!=null){
-            return Result.success(data);
-        } else {
-            return Result.fail(20003,"登录信息失效，请重新登录");
         }
     }
 

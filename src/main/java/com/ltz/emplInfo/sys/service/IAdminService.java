@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public interface IAdminService extends IService<Admin> {
 
-    Map<String, Object> login(Admin admin);
+    String login(Admin admin);
 
     Map<String, Object> getAdminInfo(String token);
 
