@@ -44,7 +44,7 @@ public class AdminController {
     }
 
     @GetMapping("/info")
-    public Result<?> getAdminInfo(@RequestParam("token") String token){
+    public Result<?> getAdminInfo(@RequestHeader("A-Token")  String token){
         // 根据token获取用户信息，redis
         Map<String, Object> data = adminService.getAdminInfo(token);
         if(data!=null){
