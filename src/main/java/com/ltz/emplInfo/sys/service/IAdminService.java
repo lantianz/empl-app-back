@@ -3,6 +3,7 @@ package com.ltz.emplInfo.sys.service;
 import com.ltz.emplInfo.sys.entity.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,4 +21,16 @@ public interface IAdminService extends IService<Admin> {
     Map<String, Object> getAdminInfo(String token);
 
     void logout(String token);
+
+    List<Admin> getDeptAdmin(Integer adminId);
+
+    List<Admin> getDeptAdminBySearch(String keyword);
+
+    boolean add(Admin deptAdmin);
+
+    boolean deleteById(String id);
+
+    boolean editById(Admin deptAdmin);
+
+    boolean deleteAllByIds(List<String> ids);
 }

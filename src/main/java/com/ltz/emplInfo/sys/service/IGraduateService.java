@@ -17,7 +17,7 @@ public interface IGraduateService extends IService<Graduate> {
 
     List<Graduate> getGraduatesByPage(int pageNum, int pageSize);
 
-    boolean deleteById(Integer deleteId);
+    boolean deleteById(String deleteId);
 
     boolean editById(Graduate graduate);
 

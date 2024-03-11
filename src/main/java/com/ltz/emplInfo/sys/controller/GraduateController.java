@@ -2,6 +2,7 @@ package com.ltz.emplInfo.sys.controller;
 
 import com.ltz.emplInfo.common.vo.Result;
 import com.ltz.emplInfo.sys.entity.Admin;
+import com.ltz.emplInfo.sys.entity.EmplInfo;
 import com.ltz.emplInfo.sys.entity.Graduate;
 import com.ltz.emplInfo.sys.service.IAdminService;
 import com.ltz.emplInfo.sys.service.IGraduateService;
@@ -49,7 +50,11 @@ public class GraduateController {
     @GetMapping("/getUserBySearch")
     public Result<List<Graduate>> getGraduateBySearch(@RequestParam("keyword") String keyword) {
         List<Graduate> list = graduateService.getGraduateBySearch(keyword);
-        return Result.success(list,"找到了");
+        Result<List<Graduate>> result = new Result<>();
+        result.setData(list);
+        result.setTotal(list.size());
+        result.setMessage("找到了");
+        return result;
     }
 
     @PostMapping("/addUser")
@@ -63,7 +68,7 @@ public class GraduateController {
     }
 
     @DeleteMapping("/deleteUser/{id}")
-    public Result<String> deleteGraduate(@PathVariable("id") int id) {
+    public Result<String> deleteGraduate(@PathVariable("id") String id) {
         boolean deleted = graduateService.deleteById(id);
         if (deleted) {
             return Result.success("删除毕业生成功");

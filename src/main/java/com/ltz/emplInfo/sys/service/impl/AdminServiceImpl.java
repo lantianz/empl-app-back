@@ -27,6 +27,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements IAdminService {
     @Autowired
+    private AdminMapper adminMapper;
+
+    @Autowired
     private RedisTemplate redisTemplate;
 
     @Override
@@ -41,9 +44,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
             // UUID
             String key = "admin:" + UUID.randomUUID();
 
-            // 存入redis
+            // 存入redis，设定token过期时间
             loginAdmin.setPassword(null);
-            redisTemplate.opsForValue().set(key, loginAdmin,30, TimeUnit.MINUTES);
+            redisTemplate.opsForValue().set(key, loginAdmin, 12, TimeUnit.HOURS);
 
             // 返回数据
             return key;
@@ -61,6 +64,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
             data.put("jobId", loginAdmin.getJobId());
             data.put("name", loginAdmin.getName());
             data.put("phone", loginAdmin.getPhone());
+            data.put("email", loginAdmin.getEmail());
             data.put("username", loginAdmin.getUsername());
             // 获取角色等级
             Role roles = this.baseMapper.getRoleByUserId(loginAdmin.getAdminId());
@@ -74,5 +78,35 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     public void logout(String token) {
         redisTemplate.delete(token);
+    }
+
+    @Override
+    public List<Admin> getDeptAdmin(Integer adminId) {
+        return adminMapper.getDeptAdmin(adminId);
+    }
+
+    @Override
+    public List<Admin> getDeptAdminBySearch(String keyword) {
+        return adminMapper.getDeptAdminBySearch(keyword);
+    }
+
+    @Override
+    public boolean add(Admin deptAdmin) {
+        return adminMapper.add(deptAdmin);
+    }
+
+    @Override
+    public boolean deleteById(String id) {
+        return adminMapper.deleteById(id);
+    }
+
+    @Override
+    public boolean editById(Admin deptAdmin) {
+        return adminMapper.editById(deptAdmin);
+    }
+
+    @Override
+    public boolean deleteAllByIds(List<String> ids) {
+        return adminMapper.deleteAllByIds(ids);
     }
 }

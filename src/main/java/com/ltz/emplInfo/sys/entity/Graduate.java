@@ -15,7 +15,7 @@ public class Graduate implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    private Integer studentId;
+    private String studentId;
 
     private String name;
 
@@ -39,11 +39,11 @@ public class Graduate implements Serializable {
         this.id = id;
     }
 
-    public Integer getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Integer studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 
@@ -107,7 +107,7 @@ public class Graduate implements Serializable {
     public String toString() {
         return "Graduate{" +
                 "id=" + id +
-                ", studentId=" + studentId +
+                ", studentId='" + studentId + '\'' +
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", department='" + department + '\'' +

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ltz.emplInfo.sys.mapper.AdminMapper">
+    <!-- 权限查询 -->
     <select id="getRoleByUserId" parameterType="Integer" resultType="com.ltz.emplInfo.sys.entity.Role">
         SELECT
             b.role_id, b.role_name, b.role_desc
@@ -9,4 +10,54 @@
             a.role_id = b.`role_id`
           AND a.admin_id = #{adminId}
     </select>
+    <!-- 获取全部负责人信息（除了密码） -->
+    <select id="getDeptAdmin" parameterType="Integer" resultType="com.ltz.emplInfo.sys.entity.Admin">
+        SELECT
+            admin_id, job_id, name, phone, email, username
+        FROM `admin`
+        WHERE
+            admin_id = #{adminId}
+    </select>
+    <!--查找-->
+    <select id="getDeptAdminBySearch" parameterType="String" resultType="com.ltz.emplInfo.sys.entity.Admin">
+        SELECT * FROM `admin`
+        WHERE job_id LIKE CONCAT('%', #{keyword}, '%')
+           OR name LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+    <!--添加-->
+    <insert id="add" parameterType="com.ltz.emplInfo.sys.entity.Admin">
+        INSERT INTO `admin` ( admin_id, job_id, name, phone, email, username, password)
+        SELECT 3, #{jobId}, #{name}, #{phone},#{email}, #{username}, #{password}
+        FROM dual
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM `admin`
+            WHERE job_id = #{jobId}
+        )
+    </insert>
+    <!--通过ID删除-->
+    <delete id="deleteById" parameterType="java.lang.String">
+        DELETE FROM `admin`
+        WHERE job_id = #{id}
+
+    </delete>
+    <!--通过ID批量删除-->
+    <delete id="deleteAllByIds">
+        DELETE FROM `admin`
+        WHERE job_id IN
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <!--编辑并更新-->
+    <update id="editById" parameterType="com.ltz.emplInfo.sys.entity.Admin">
+        UPDATE `admin`
+        SET job_id = #{jobId},
+            name = #{name},
+            phone = #{phone},
+            email = #{email},
+            username = #{username},
+            password = IFNULL (#{password}, password)
+        WHERE job_id = #{jobId}
+    </update>
 </mapper>

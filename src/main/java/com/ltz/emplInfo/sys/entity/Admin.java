@@ -14,16 +14,29 @@ public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Integer id;
+
     private Integer adminId;
 
-    private Integer jobId;
+    private String jobId;
+
     private String name;
 
     private String phone;
 
+    private String email;
+
     private String username;
 
     private String password;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getAdminId() {
         return adminId;
@@ -33,11 +46,11 @@ public class Admin implements Serializable {
         this.adminId = adminId;
     }
 
-    public Integer getJobId() {
+    public String getJobId() {
         return jobId;
     }
 
-    public void setJobId(Integer jobId) {
+    public void setJobId(String jobId) {
         this.jobId = jobId;
     }
 
@@ -55,6 +68,14 @@ public class Admin implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -76,10 +97,12 @@ public class Admin implements Serializable {
     @Override
     public String toString() {
         return "Admin{" +
-                "adminId=" + adminId +
-                ", jobId=" + jobId +
+                "id=" + id +
+                ", adminId=" + adminId +
+                ", jobId='" + jobId + '\'' +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';

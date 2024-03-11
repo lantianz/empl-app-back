@@ -20,7 +20,7 @@ public interface GraduateMapper extends BaseMapper<Graduate> {
 
     List<Graduate> getGraduatesByPage(@Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize); //(多个参数需要使用Param注解)Param包导错了搞了半天。。。
 
-    boolean deleteById(Integer deleteId);
+    boolean deleteById(String deleteId);
 
     boolean editById(Graduate graduate);
 

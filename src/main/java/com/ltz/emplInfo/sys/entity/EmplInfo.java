@@ -1,113 +1,138 @@
 package com.ltz.emplInfo.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author tianzhi
- * @since 2024-03-07
+ * @since 2024-03-09
  */
 @TableName("empl_info")
 public class EmplInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer studentId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
-    private String signedUnitName;
+    private String studentId;
 
-    private String signedUnitCategory;
+    private String companyName;
 
-    private String signedUnitLocation;
+    private String companyType;
 
-    private LocalDate signingDate;
+    private String companyProvince;
 
-    private Boolean isPursuingGraduateStudy;
+    private String companyCity;
 
-    private Boolean isEmployedOnTime;
+    private LocalDate signDate;
 
-    private Boolean isEmployedWithinTwoYears;
+    private String postgraduate;
 
-    public Integer getStudentId() {
+    private String emplOntime;
+
+    private String emplWithintwo;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Integer studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 
-    public String getSignedUnitName() {
-        return signedUnitName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setSignedUnitName(String signedUnitName) {
-        this.signedUnitName = signedUnitName;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getSignedUnitCategory() {
-        return signedUnitCategory;
+    public String getCompanyType() {
+        return companyType;
     }
 
-    public void setSignedUnitCategory(String signedUnitCategory) {
-        this.signedUnitCategory = signedUnitCategory;
+    public void setCompanyType(String companyType) {
+        this.companyType = companyType;
     }
 
-    public String getSignedUnitLocation() {
-        return signedUnitLocation;
+    public String getCompanyProvince() {
+        return companyProvince;
     }
 
-    public void setSignedUnitLocation(String signedUnitLocation) {
-        this.signedUnitLocation = signedUnitLocation;
+    public void setCompanyProvince(String companyProvince) {
+        this.companyProvince = companyProvince;
     }
 
-    public LocalDate getSigningDate() {
-        return signingDate;
+    public String getCompanyCity() {
+        return companyCity;
     }
 
-    public void setSigningDate(LocalDate signingDate) {
-        this.signingDate = signingDate;
+    public void setCompanyCity(String companyCity) {
+        this.companyCity = companyCity;
     }
 
-    public Boolean getIsPursuingGraduateStudy() {
-        return isPursuingGraduateStudy;
+    public LocalDate getSignDate() {
+        return signDate;
     }
 
-    public void setIsPursuingGraduateStudy(Boolean isPursuingGraduateStudy) {
-        this.isPursuingGraduateStudy = isPursuingGraduateStudy;
+    public void setSignDate(LocalDate signDate) {
+        this.signDate = signDate;
     }
 
-    public Boolean getIsEmployedOnTime() {
-        return isEmployedOnTime;
+    public String getPostgraduate() {
+        return postgraduate;
     }
 
-    public void setIsEmployedOnTime(Boolean isEmployedOnTime) {
-        this.isEmployedOnTime = isEmployedOnTime;
+    public void setPostgraduate(String postgraduate) {
+        this.postgraduate = postgraduate;
     }
 
-    public Boolean getIsEmployedWithinTwoYears() {
-        return isEmployedWithinTwoYears;
+    public String getEmplOntime() {
+        return emplOntime;
     }
 
-    public void setIsEmployedWithinTwoYears(Boolean isEmployedWithinTwoYears) {
-        this.isEmployedWithinTwoYears = isEmployedWithinTwoYears;
+    public void setEmplOntime(String emplOntime) {
+        this.emplOntime = emplOntime;
+    }
+
+    public String getEmplWithintwo() {
+        return emplWithintwo;
+    }
+
+    public void setEmplWithintwo(String emplWithintwo) {
+        this.emplWithintwo = emplWithintwo;
     }
 
     @Override
     public String toString() {
         return "EmplInfo{" +
-            "studentId = " + studentId +
-            ", signedUnitName = " + signedUnitName +
-            ", signedUnitCategory = " + signedUnitCategory +
-            ", signedUnitLocation = " + signedUnitLocation +
-            ", signingDate = " + signingDate +
-            ", isPursuingGraduateStudy = " + isPursuingGraduateStudy +
-            ", isEmployedOnTime = " + isEmployedOnTime +
-            ", isEmployedWithinTwoYears = " + isEmployedWithinTwoYears +
-        "}";
+                "id=" + id +
+                ", studentId='" + studentId + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", companyType='" + companyType + '\'' +
+                ", companyProvince='" + companyProvince + '\'' +
+                ", companyCity='" + companyCity + '\'' +
+                ", signDate=" + signDate +
+                ", postgraduate=" + postgraduate +
+                ", emplOntime=" + emplOntime +
+                ", emplWithintwo=" + emplWithintwo +
+                '}';
     }
 }

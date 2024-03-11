@@ -27,7 +27,7 @@
         )
     </insert>
 <!--    通过ID删除-->
-    <delete id="deleteById" parameterType="Integer">
+    <delete id="deleteById" parameterType="String">
         DELETE FROM graduate
         WHERE student_id = #{deleteId}
     </delete>

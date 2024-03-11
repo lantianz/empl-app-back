@@ -35,7 +35,6 @@ public class StandInfoController {
     public Result<Map<String, Object>> getStandInfo() {
         List<StandInfo> list = standInfoService.list();
 
-        // 新建一个Map，用于存储过滤后的字段值和相同 department 的 major
         Map<String, Object> result = new HashMap<>();
         Map<String, List<String>> filteredFields = new HashMap<>();
 

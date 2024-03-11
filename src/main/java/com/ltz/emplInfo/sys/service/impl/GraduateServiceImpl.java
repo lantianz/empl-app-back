@@ -30,7 +30,7 @@ public class GraduateServiceImpl extends ServiceImpl<GraduateMapper, Graduate> i
     }
 
     @Override
-    public boolean deleteById(Integer deleteId) {
+    public boolean deleteById(String deleteId) {
         return graduateMapper.deleteById(deleteId);
     }
 
