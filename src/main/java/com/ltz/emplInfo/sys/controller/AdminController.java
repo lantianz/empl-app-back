@@ -2,18 +2,14 @@ package com.ltz.emplInfo.sys.controller;
 
 import com.ltz.emplInfo.common.vo.Result;
 import com.ltz.emplInfo.sys.entity.Admin;
-import com.ltz.emplInfo.sys.entity.EmplInfo;
-import com.ltz.emplInfo.sys.entity.Graduate;
-import com.ltz.emplInfo.sys.entity.Permission;
 import com.ltz.emplInfo.sys.service.IAdminService;
-import com.ltz.emplInfo.sys.service.IPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -119,6 +115,22 @@ public class AdminController {
             return Result.success("更新负责人信息成功");
         } else {
             return Result.fail("更新负责人信息失败，可能该负责人不存在");
+        }
+    }
+
+    @PutMapping("/changePwd")
+    public Result<String> editAdminPwd(@RequestBody Admin admin) {
+        if (!Objects.equals(adminService.getAdminByJobId(admin.getJobId()).getPassword(), admin.getOldPwd())) {
+            return Result.fail("旧密码错误");
+        }
+        if (Objects.equals(adminService.getAdminByJobId(admin.getJobId()).getPassword(), admin.getPassword())) {
+            return Result.fail("新密码不能与旧密码相同");
+        }
+        boolean updated = adminService.editPwdById(admin);
+        if (updated) {
+            return Result.success("更改密码成功");
+        } else {
+            return Result.fail("更改密码失败");
         }
     }
 

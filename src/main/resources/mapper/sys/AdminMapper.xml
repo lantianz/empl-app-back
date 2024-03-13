@@ -60,4 +60,18 @@
             password = IFNULL (#{password}, password)
         WHERE job_id = #{jobId}
     </update>
+    <!--通过jobId获取数据-->
+    <select id="getAdminByJobId" parameterType="String" resultType="com.ltz.emplInfo.sys.entity.Admin">
+        SELECT
+            *
+        FROM `admin`
+        WHERE
+            job_id = #{jobId}
+    </select>
+    <!-- 更改密码 -->
+    <update id="editPwdById" parameterType="com.ltz.emplInfo.sys.entity.Admin">
+        UPDATE `admin`
+        SET password = IFNULL (#{password}, password)
+        WHERE job_id = #{jobId}
+    </update>
 </mapper>

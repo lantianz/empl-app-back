@@ -1,10 +1,9 @@
 package com.ltz.emplInfo.sys.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ltz.emplInfo.sys.entity.EmplInfo;
-import com.ltz.emplInfo.sys.entity.Graduate;
 import com.ltz.emplInfo.sys.mapper.EmplInfoMapper;
 import com.ltz.emplInfo.sys.service.IEmplInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +45,15 @@ public class EmplInfoServiceImpl extends ServiceImpl<EmplInfoMapper, EmplInfo> i
     @Override
     public boolean deleteAllByIds(List<String> ids) {
         return emplInfoMapper.deleteAllByIds(ids);
+    }
+
+    @Override
+    public int countOfGraduate(String department, String major, String grade) {
+        return emplInfoMapper.countOfGraduate(department, major, grade);
+    }
+
+    @Override
+    public int countOfEmployed(String department, String major, String grade) {
+        return emplInfoMapper.countOfEmployed(department, major, grade);
     }
 }

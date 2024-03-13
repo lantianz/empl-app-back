@@ -1,7 +1,7 @@
 package com.ltz.emplInfo.sys.mapper;
 
-import com.ltz.emplInfo.sys.entity.Graduate;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ltz.emplInfo.sys.entity.Graduate;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -29,4 +29,8 @@ public interface GraduateMapper extends BaseMapper<Graduate> {
     List<Graduate> getAllGraduate();
 
     List<Graduate> getGraduateBySearch(String keyword);
+
+    boolean editByList(@Param("ids") List<String> ids, @Param("password") String password);
+
+    List<Graduate> getDeptGraduateBySearch(String dept);
 }

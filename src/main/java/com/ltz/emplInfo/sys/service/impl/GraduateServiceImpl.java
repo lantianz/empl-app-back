@@ -1,9 +1,9 @@
 package com.ltz.emplInfo.sys.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ltz.emplInfo.sys.entity.Graduate;
 import com.ltz.emplInfo.sys.mapper.GraduateMapper;
 import com.ltz.emplInfo.sys.service.IGraduateService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,5 +52,15 @@ public class GraduateServiceImpl extends ServiceImpl<GraduateMapper, Graduate> i
     @Override
     public List<Graduate> getGraduateBySearch(String keyword) {
         return graduateMapper.getGraduateBySearch(keyword);
+    }
+
+    @Override
+    public boolean editByList(List<String> ids, String password) {
+        return graduateMapper.editByList(ids, password);
+    }
+
+    @Override
+    public List<Graduate> getDeptGraduateBySearch(String dept) {
+        return graduateMapper.getDeptGraduateBySearch(dept);
     }
 }

@@ -2,18 +2,19 @@ package com.ltz.emplInfo.sys.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.ltz.emplInfo.common.vo.Result;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ltz.emplInfo.sys.entity.Admin;
 import com.ltz.emplInfo.sys.entity.Role;
 import com.ltz.emplInfo.sys.mapper.AdminMapper;
 import com.ltz.emplInfo.sys.service.IAdminService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -108,5 +109,15 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     public boolean deleteAllByIds(List<String> ids) {
         return adminMapper.deleteAllByIds(ids);
+    }
+
+    @Override
+    public boolean editPwdById(Admin admin) {
+        return adminMapper.editPwdById(admin);
+    }
+
+    @Override
+    public Admin getAdminByJobId(String jobId) {
+        return adminMapper.getAdminByJobId(jobId);
     }
 }

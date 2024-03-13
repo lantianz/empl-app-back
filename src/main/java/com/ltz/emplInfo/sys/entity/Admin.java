@@ -1,5 +1,7 @@
 package com.ltz.emplInfo.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.io.Serializable;
 
 /**
@@ -29,6 +31,9 @@ public class Admin implements Serializable {
     private String username;
 
     private String password;
+
+    @TableField(exist = false)
+    private String oldPwd;
 
     public Integer getId() {
         return id;
@@ -92,6 +97,14 @@ public class Admin implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getOldPwd() {
+        return oldPwd;
+    }
+
+    public void setOldPwd(String oldPwd) {
+        this.oldPwd = oldPwd;
     }
 
     @Override

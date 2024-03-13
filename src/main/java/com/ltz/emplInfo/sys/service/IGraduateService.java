@@ -1,7 +1,7 @@
 package com.ltz.emplInfo.sys.service;
 
-import com.ltz.emplInfo.sys.entity.Graduate;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ltz.emplInfo.sys.entity.Graduate;
 
 import java.util.List;
 
@@ -26,4 +26,8 @@ public interface IGraduateService extends IService<Graduate> {
     List<Graduate> getAllGraduate();
 
     List<Graduate> getGraduateBySearch(String keyword);
+
+    boolean editByList(List<String> ids, String password);
+
+    List<Graduate> getDeptGraduateBySearch(String dept);
 }

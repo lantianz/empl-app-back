@@ -11,6 +11,11 @@
         WHERE name LIKE CONCAT('%', #{keyword}, '%')
            OR student_id LIKE CONCAT('%', #{keyword}, '%')
     </select>
+<!--    院系查找-->
+    <select id="getDeptGraduateBySearch" parameterType="String" resultType="com.ltz.emplInfo.sys.entity.Graduate">
+        SELECT student_id, name, gender, department, major, grade, username FROM graduate
+        WHERE department = #{keyword}
+    </select>
 <!--    分页-->
     <select id="getGraduatesByPage" resultType="com.ltz.emplInfo.sys.entity.Graduate">
         SELECT student_id, name, gender, department, major, grade, username FROM graduate LIMIT #{startIndex}, #{pageSize}
@@ -42,5 +47,15 @@
             username = #{username},
             password = IFNULL (#{password}, password)
         WHERE student_id = #{studentId}
+    </update>
+<!--    分配账号-->
+    <update id="editByList" parameterType="com.ltz.emplInfo.sys.entity.Graduate">
+        UPDATE graduate
+        SET username = student_id,
+            `password` = #{password}
+        WHERE student_id IN
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
     </update>
 </mapper>

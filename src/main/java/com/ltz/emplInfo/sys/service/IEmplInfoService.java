@@ -1,8 +1,7 @@
 package com.ltz.emplInfo.sys.service;
 
-import com.ltz.emplInfo.sys.entity.EmplInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ltz.emplInfo.sys.entity.Graduate;
+import com.ltz.emplInfo.sys.entity.EmplInfo;
 
 import java.util.List;
 
@@ -25,4 +24,8 @@ public interface IEmplInfoService extends IService<EmplInfo> {
     boolean editById(EmplInfo emplInfo);
 
     boolean deleteAllByIds(List<String> ids);
+
+    int countOfGraduate(String department, String major, String grade);
+
+    int countOfEmployed(String department, String major, String grade);
 }

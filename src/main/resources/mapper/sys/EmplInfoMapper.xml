@@ -3,7 +3,8 @@
 <mapper namespace="com.ltz.emplInfo.sys.mapper.EmplInfoMapper">
     <!--查找-->
     <select id="getEmplInfoBySearch" parameterType="String" resultType="com.ltz.emplInfo.sys.entity.EmplInfo">
-        SELECT * FROM empl_info
+        SELECT *
+        FROM empl_info
         WHERE student_id LIKE CONCAT('%', #{keyword}, '%')
            OR company_name LIKE CONCAT('%', #{keyword}, '%')
     </select>
@@ -11,18 +12,24 @@
     <insert id="add" parameterType="com.ltz.emplInfo.sys.entity.EmplInfo">
         INSERT INTO empl_info (student_id, company_name, company_type, company_province,
                                company_city, sign_date, postgraduate, empl_ontime, empl_withintwo)
-        SELECT #{studentId}, #{companyName}, #{companyType}, #{companyProvince},
-               #{companyCity}, #{signDate}, #{postgraduate}, #{emplOntime}, #{emplWithintwo}
+        SELECT #{studentId},
+               #{companyName},
+               #{companyType},
+               #{companyProvince},
+               #{companyCity},
+               #{signDate},
+               #{postgraduate},
+               #{emplOntime},
+               #{emplWithintwo}
         FROM dual
-        WHERE NOT EXISTS (
-            SELECT 1
-            FROM empl_info
-            WHERE student_id = #{studentId}
-        )
+        WHERE NOT EXISTS (SELECT 1
+                          FROM empl_info
+                          WHERE student_id = #{studentId})
     </insert>
     <!--通过ID删除-->
     <delete id="deleteById" parameterType="java.lang.String">
-        DELETE FROM empl_info
+        DELETE
+        FROM empl_info
         WHERE student_id = #{id}
 
     </delete>
@@ -37,14 +44,39 @@
     <!--编辑并更新-->
     <update id="editById" parameterType="com.ltz.emplInfo.sys.entity.EmplInfo">
         UPDATE empl_info
-        SET company_name = #{companyName},
-            company_type = #{companyType},
+        SET company_name     = #{companyName},
+            company_type     = #{companyType},
             company_province = #{companyProvince},
-            company_city = #{companyCity},
-            sign_date = #{signDate},
-            postgraduate = #{postgraduate},
-            empl_ontime = #{emplOntime},
-            empl_withintwo = #{emplWithintwo}
+            company_city     = #{companyCity},
+            sign_date        = #{signDate},
+            postgraduate     = #{postgraduate},
+            empl_ontime      = #{emplOntime},
+            empl_withintwo   = #{emplWithintwo}
         WHERE student_id = #{studentId}
     </update>
+    <!--  就业率相关获取  -->
+    <select id="countOfGraduate" resultType="Integer">
+        SELECT COUNT(*) FROM graduate
+        WHERE department = #{department}
+        <if test="major != null and major != ''">
+            AND major = #{major}
+        </if>
+        <if test="grade != null and grade != ''">
+            AND grade = #{grade}
+        </if>
+    </select>
+    <select id="countOfEmployed" resultType="Integer">
+        SELECT COUNT(*)
+        FROM graduate a,
+        empl_info b
+        WHERE a.student_id = b.student_id
+        AND b.empl_withintwo = '1'
+        AND a.department = #{department}
+        <if test="major != null and major != ''">
+            AND a.major = #{major}
+        </if>
+        <if test="grade != null and grade != ''">
+            AND a.grade = #{grade}
+        </if>
+    </select>
 </mapper>

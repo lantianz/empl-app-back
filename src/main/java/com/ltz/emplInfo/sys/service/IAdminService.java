@@ -1,7 +1,7 @@
 package com.ltz.emplInfo.sys.service;
 
-import com.ltz.emplInfo.sys.entity.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ltz.emplInfo.sys.entity.Admin;
 
 import java.util.List;
 import java.util.Map;
@@ -33,4 +33,8 @@ public interface IAdminService extends IService<Admin> {
     boolean editById(Admin deptAdmin);
 
     boolean deleteAllByIds(List<String> ids);
+
+    boolean editPwdById(Admin admin);
+
+    Admin getAdminByJobId(String jobId);
 }

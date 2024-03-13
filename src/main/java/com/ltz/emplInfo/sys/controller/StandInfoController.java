@@ -1,17 +1,11 @@
 package com.ltz.emplInfo.sys.controller;
 
 import com.ltz.emplInfo.common.vo.Result;
-import com.ltz.emplInfo.sys.entity.Admin;
-import com.ltz.emplInfo.sys.entity.Graduate;
 import com.ltz.emplInfo.sys.entity.StandInfo;
 import com.ltz.emplInfo.sys.service.IStandInfoService;
-import com.ltz.emplInfo.sys.service.impl.StandInfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
@@ -55,7 +49,7 @@ public class StandInfoController {
     }
     // 过滤非空字段并存储到List中
     private void filterField(Map<String, List<String>> filteredFields, String fieldName, String value) {
-        if (!Objects.isNull(value)) {
+        if (!Objects.isNull(value) && !value.equals("")) {
             filteredFields.computeIfAbsent(fieldName, k -> new ArrayList<>()).add(value);
         }
     }

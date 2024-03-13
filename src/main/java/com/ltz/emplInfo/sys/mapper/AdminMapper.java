@@ -1,7 +1,7 @@
 package com.ltz.emplInfo.sys.mapper;
 
-import com.ltz.emplInfo.sys.entity.Admin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ltz.emplInfo.sys.entity.Admin;
 import com.ltz.emplInfo.sys.entity.Role;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -31,4 +31,8 @@ public interface AdminMapper extends BaseMapper<Admin> {
     boolean editById(Admin deptAdmin);
 
     boolean deleteAllByIds(@Param("ids") List<String> ids);
+
+    boolean editPwdById(Admin admin);
+
+    Admin getAdminByJobId(String jobId);
 }

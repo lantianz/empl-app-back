@@ -1,16 +1,11 @@
 package com.ltz.emplInfo.sys.controller;
 
 import com.ltz.emplInfo.common.vo.Result;
-import com.ltz.emplInfo.sys.entity.Admin;
-import com.ltz.emplInfo.sys.entity.EmplInfo;
 import com.ltz.emplInfo.sys.entity.Graduate;
-import com.ltz.emplInfo.sys.service.IAdminService;
 import com.ltz.emplInfo.sys.service.IGraduateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +52,15 @@ public class GraduateController {
         return result;
     }
 
+    @GetMapping("/getDeptUserBySearch")
+    public Result<List<Graduate>> getDeptGraduateBySearch(@RequestParam("deptName") String deptName) {
+        List<Graduate> list = graduateService.getDeptGraduateBySearch(deptName);
+        Result<List<Graduate>> result = new Result<>();
+        result.setData(list);
+        result.setTotal(list.size());
+        return result;
+    }
+
     @PostMapping("/addUser")
     public Result<String> addGraduate(@RequestBody Graduate graduate) {
         boolean added = graduateService.add(graduate);
@@ -80,6 +84,16 @@ public class GraduateController {
     @PutMapping("/editUser")
     public Result<String> editGraduate(@RequestBody Graduate graduate) {
         boolean updated = graduateService.editById(graduate);
+        if (updated) {
+            return Result.success("更新毕业生信息成功");
+        } else {
+            return Result.fail("更新毕业生信息失败，可能该毕业生不存在");
+        }
+    }
+
+    @PutMapping("/editUserByList/{ids}/{params}")
+    public Result<String> editGraduateByList(@PathVariable("ids") List<String> ids, @PathVariable("params") String password) {
+        boolean updated = graduateService.editByList(ids, password);
         if (updated) {
             return Result.success("更新毕业生信息成功");
         } else {
