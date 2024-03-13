@@ -1,9 +1,9 @@
 package com.ltz.emplInfo.sys.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ltz.emplInfo.sys.entity.StandInfo;
 import com.ltz.emplInfo.sys.mapper.StandInfoMapper;
 import com.ltz.emplInfo.sys.service.IStandInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

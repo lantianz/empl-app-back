@@ -1,11 +1,9 @@
 package com.ltz.emplInfo.sys.service;
 
-import com.ltz.emplInfo.sys.entity.Admin;
-import com.ltz.emplInfo.sys.entity.Permission;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ltz.emplInfo.sys.entity.Permission;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

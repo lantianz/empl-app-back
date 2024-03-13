@@ -1,15 +1,13 @@
 package com.ltz.emplInfo.sys.service.impl;
 
-import com.ltz.emplInfo.sys.entity.Admin;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ltz.emplInfo.sys.entity.Permission;
 import com.ltz.emplInfo.sys.mapper.PermissionMapper;
 import com.ltz.emplInfo.sys.service.IPermissionService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

@@ -1,7 +1,7 @@
 package com.ltz.emplInfo.sys.service;
 
-import com.ltz.emplInfo.sys.entity.StandInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ltz.emplInfo.sys.entity.StandInfo;
 
 /**
  * <p>

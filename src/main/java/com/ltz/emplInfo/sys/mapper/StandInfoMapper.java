@@ -1,7 +1,7 @@
 package com.ltz.emplInfo.sys.mapper;
 
-import com.ltz.emplInfo.sys.entity.StandInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ltz.emplInfo.sys.entity.StandInfo;
 
 /**
  * <p>

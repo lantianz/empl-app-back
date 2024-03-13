@@ -1,12 +1,12 @@
 package com.ltz.emplInfo.sys.controller;
 
-import com.ltz.emplInfo.common.vo.Result;
-import com.ltz.emplInfo.sys.entity.Admin;
 import com.ltz.emplInfo.sys.entity.Permission;
 import com.ltz.emplInfo.sys.service.IPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
