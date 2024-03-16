@@ -27,5 +27,7 @@ public interface IEmplInfoService extends IService<EmplInfo> {
 
     int countOfGraduate(String department, String major, String grade);
 
-    int countOfEmployed(String department, String major, String grade);
+    int countOfEmployed(String department, String major, String company_type, String company_city, String grade);
+
+    int countOfOnTime(String dept, String grade);
 }

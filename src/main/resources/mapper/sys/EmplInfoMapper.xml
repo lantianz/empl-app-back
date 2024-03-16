@@ -22,7 +22,8 @@
                #{emplOntime},
                #{emplWithintwo}
         FROM dual
-        WHERE NOT EXISTS (SELECT 1
+        WHERE EXISTS (SELECT 1 FROM graduate WHERE student_id = #{studentId})
+          AND NOT EXISTS (SELECT 1
                           FROM empl_info
                           WHERE student_id = #{studentId})
     </insert>
@@ -71,9 +72,30 @@
         empl_info b
         WHERE a.student_id = b.student_id
         AND b.empl_withintwo = '1'
-        AND a.department = #{department}
+        <if test="department != null and department != ''">
+            AND a.department = #{department}
+        </if>
         <if test="major != null and major != ''">
             AND a.major = #{major}
+        </if>
+        <if test="company_type != null and company_type != ''">
+            AND b.company_type = #{company_type}
+        </if>
+        <if test="company_city != null and company_city != ''">
+            AND b.company_city = #{company_city}
+        </if>
+        <if test="grade != null and grade != ''">
+            AND a.grade = #{grade}
+        </if>
+    </select>
+    <select id="countOfOnTime" resultType="Integer">
+        SELECT COUNT(*)
+        FROM graduate a,
+        empl_info b
+        WHERE a.student_id = b.student_id
+        AND b.empl_ontime = '1'
+        <if test="department != null and department != ''">
+            AND a.department = #{department}
         </if>
         <if test="grade != null and grade != ''">
             AND a.grade = #{grade}

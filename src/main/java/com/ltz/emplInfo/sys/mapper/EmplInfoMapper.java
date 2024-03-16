@@ -30,5 +30,9 @@ public interface EmplInfoMapper extends BaseMapper<EmplInfo> {
 
     int countOfGraduate(@Param("department") String department, @Param("major") String major, @Param("grade") String grade);
 
-    int countOfEmployed(@Param("department") String department, @Param("major") String major, @Param("grade") String grade);
+    int countOfEmployed(@Param("department") String department, @Param("major") String major,
+                        @Param("company_type") String company_type, @Param("company_city") String company_city,
+                        @Param("grade") String grade);
+
+    int countOfOnTime(@Param("department") String department, @Param("grade") String grade);
 }

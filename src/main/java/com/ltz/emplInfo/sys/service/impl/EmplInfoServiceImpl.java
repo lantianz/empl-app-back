@@ -53,7 +53,12 @@ public class EmplInfoServiceImpl extends ServiceImpl<EmplInfoMapper, EmplInfo> i
     }
 
     @Override
-    public int countOfEmployed(String department, String major, String grade) {
-        return emplInfoMapper.countOfEmployed(department, major, grade);
+    public int countOfEmployed(String department, String major, String company_type, String company_city, String grade) {
+        return emplInfoMapper.countOfEmployed(department, major, company_type, company_city, grade);
+    }
+
+    @Override
+    public int countOfOnTime(String dept, String grade) {
+        return emplInfoMapper.countOfOnTime(dept, grade);
     }
 }

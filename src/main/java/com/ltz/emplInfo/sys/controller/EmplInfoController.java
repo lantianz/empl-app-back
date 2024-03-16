@@ -34,7 +34,8 @@ public class EmplInfoController {
     private IGraduateService graduateService;
 
     @GetMapping("/getAllUserByPage")
-    public Result<List<EmplInfo>> getAllEmplInfoByPage(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+    public Result<List<EmplInfo>> getAllEmplInfoByPage(@RequestParam("pageNum") int pageNum,
+                                                       @RequestParam("pageSize") int pageSize) {
         List<EmplInfo> allEmplInfos = emplInfoService.list();
         for (EmplInfo info : allEmplInfos) {
             convertEmplInfo(info);
@@ -133,7 +134,7 @@ public class EmplInfoController {
             int gradeCount = emplInfoService.countOfGraduate(department, "", grade);
             byDeptTable.setCountOfGraduate(String.valueOf(gradeCount));
             // 已就业
-            int emplCount = emplInfoService.countOfEmployed(department, "", grade);
+            int emplCount = emplInfoService.countOfEmployed(department, "", "", "", grade);
             byDeptTable.setCountOfEmployed(String.valueOf(emplCount));
             // 计算就业率
             byDeptTable.setEmploymentRate(df.format((double) emplCount / gradeCount));
@@ -145,7 +146,8 @@ public class EmplInfoController {
     }
 
     @GetMapping("/byMajor")
-    public List<TotalTable> getByMajorTable(@RequestParam("department") String department, @RequestParam("grade") String grade) {
+    public List<TotalTable> getByMajorTable(@RequestParam("department") String department,
+                                            @RequestParam("grade") String grade) {
         List<Graduate> all = graduateService.getDeptGraduateBySearch(department);
         List<TotalTable> byMajor = new ArrayList<>();
 
@@ -170,7 +172,7 @@ public class EmplInfoController {
             int gradeCount = emplInfoService.countOfGraduate(department, major, grade);
             byMajorTable.setCountOfGraduate(String.valueOf(gradeCount));
             // 已就业
-            int emplCount = emplInfoService.countOfEmployed(department, major, grade);
+            int emplCount = emplInfoService.countOfEmployed(department, major, "", "", grade);
             byMajorTable.setCountOfEmployed(String.valueOf(emplCount));
             // 计算就业率
             byMajorTable.setEmploymentRate(df.format((double) emplCount / gradeCount));
@@ -181,14 +183,168 @@ public class EmplInfoController {
         return byMajor;
     }
 
-    // Dept和Major共用分页
-    @GetMapping("/byDeptByPage")
-    public Result<List<TotalTable>> getByDeptTableByPage(@RequestParam("department") String department, @RequestParam("grade") String grade, @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        List<TotalTable> all = new ArrayList<>();
-        if (department != null && !department.equals("")) {
-            all = getByMajorTable(department, grade);
-        } else {
+    @GetMapping("/byType")
+    public List<TotalTable> getByTypeTable(@RequestParam("department") String department,
+                                            @RequestParam("grade") String grade) {
+        List<EmplInfo> all = emplInfoService.list();
+        List<TotalTable> byType = new ArrayList<>();
+
+        // 由于数据库中的院系信息存在重复，需要先去重
+        List<String> list = new ArrayList<>();
+        for (EmplInfo emplInfo:all) {
+            String companyType = emplInfo.getCompanyType();
+            list.add(companyType);
+        }
+        HashSet<String> set = new HashSet<>(list);
+
+        // 保留三位小数
+        DecimalFormat df = new DecimalFormat("#.###");
+        // 四舍五入
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        for (String type: new ArrayList<>(set)) {
+            TotalTable byTypeTable = new TotalTable();
+            // 专业
+            byTypeTable.setCompanyType(type);
+            // 该类型 该院系就业人数
+            int typeCount = emplInfoService.countOfEmployed(department, "", type, "", grade);
+            byTypeTable.setCountOfThisTypeEmpl(String.valueOf(typeCount));
+            // 全类型 该院系就业人数
+            int allTypeCount = emplInfoService.countOfEmployed(department, "", "", "", grade);
+            // 计算百分比
+            byTypeTable.setAllInDeptRate(df.format((double) typeCount / allTypeCount));
+
+            // 该类型 全院系就业人数
+            int typeCount1 = emplInfoService.countOfEmployed("", "", type, "", grade);
+            byTypeTable.setCountOfAllTypeEmpl(String.valueOf(typeCount1));
+            // 全类型 全院系就业人数
+            int allTypeCount1 = emplInfoService.countOfEmployed("", "", "", "", grade);
+            // 计算百分比
+            byTypeTable.setAllInAllDeptRate(df.format((double) typeCount1 / allTypeCount1));
+
+            byType.add(byTypeTable);
+        }
+
+        return byType;
+    }
+
+    @GetMapping("/byPosition")
+    public List<TotalTable> getByPositionTable(@RequestParam("department") String department,
+                                           @RequestParam("grade") String grade) {
+        List<EmplInfo> all = emplInfoService.list();
+        List<TotalTable> byPosition = new ArrayList<>();
+
+        // 由于数据库中的信息存在重复，需要先去重
+        List<String> list = new ArrayList<>();
+        for (EmplInfo emplInfo:all) {
+            String city = emplInfo.getCompanyCity();
+            list.add(city);
+        }
+        HashSet<String> set = new HashSet<>(list);
+        List<String> city = new ArrayList<>(set);
+        List<EmplInfo> positions = new ArrayList<>();
+        for (String c : city) {
+            for (EmplInfo emplInfo : all) {
+                EmplInfo position = new EmplInfo();
+                if (Objects.equals(c, emplInfo.getCompanyCity())) {
+                    position.setCompanyProvince(emplInfo.getCompanyProvince());
+                    position.setCompanyCity(emplInfo.getCompanyCity());
+                    positions.add(position);
+                    break;
+                }
+            }
+        }
+
+        // 保留三位小数
+        DecimalFormat df = new DecimalFormat("#.###");
+        // 四舍五入
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        for (EmplInfo position: positions) {
+            TotalTable byPositionTable = new TotalTable();
+            // 省、市
+            byPositionTable.setCompanyProvince(position.getCompanyProvince());
+            byPositionTable.setCompanyCity(position.getCompanyCity());
+            // 该市 该院系就业人数
+            int cityCount = emplInfoService.countOfEmployed(department, "", "", position.getCompanyCity(), grade);
+            byPositionTable.setCountOfThisPositionEmpl(String.valueOf(cityCount));
+            // 全市 该院系就业人数
+            int allCityCount = emplInfoService.countOfEmployed(department, "", "", "", grade);
+            // 计算百分比
+            byPositionTable.setAllInDeptRate(df.format((double) cityCount / allCityCount));
+
+            // 该市 全院系就业人数
+            int cityCount1 = emplInfoService.countOfEmployed("", "", "", position.getCompanyCity(), grade);
+            byPositionTable.setCountOfAllPositionEmpl(String.valueOf(cityCount1));
+            // 全市 全院系就业人数
+            int allCityCount1 = emplInfoService.countOfEmployed("", "", "", "", grade);
+            // 计算百分比
+            byPositionTable.setAllInAllDeptRate(df.format((double) cityCount1 / allCityCount1));
+
+            byPosition.add(byPositionTable);
+        }
+
+        return byPosition;
+    }
+
+    @GetMapping("/emplInfoTotal")
+    public List<TotalTable> getEmplInfoTotalTable(@RequestParam("department") String department,
+                                                  @RequestParam("grade") String grade) {
+        List<TotalTable> infoTotal = new ArrayList<>();
+
+        // 由于数据库中的院系信息存在重复，需要先去重
+        List<String> list = new ArrayList<>();
+        for (Graduate graduate:graduateService.list()) {
+            String dept = graduate.getDepartment();
+            list.add(dept);
+        }
+        HashSet<String> set = new HashSet<>(list);
+
+        // 保留三位小数
+        DecimalFormat df = new DecimalFormat("#.###");
+        // 四舍五入
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        // 需要一次获取所有院系则取消注释循环
+        // for (String dept:new ArrayList<>(set)) {
+            TotalTable totalTable = new TotalTable();
+            // 毕业生总数
+            int gradeCount = emplInfoService.countOfGraduate(department, "", grade);
+            totalTable.setCountOfGraduate(String.valueOf(gradeCount));
+            // 按时就业人数
+            int countOfOnTime = emplInfoService.countOfOnTime(department, grade);
+            totalTable.setCountOfOnTime(String.valueOf(countOfOnTime));
+            // 毕业两年就业人数
+            int countOfEmployed = emplInfoService.countOfEmployed(department, "", "", "", grade);
+            totalTable.setCountOfEmployed(String.valueOf(countOfEmployed));
+            // 按时就业率
+            totalTable.setEmploymentOnTimeRate(df.format((double) countOfOnTime / gradeCount));
+            // 毕业两年就业率
+            totalTable.setEmploymentRate((df.format((double) countOfEmployed / gradeCount)));
+
+            infoTotal.add(totalTable);
+        // }
+
+        return infoTotal;
+    }
+
+    // 共用分页类
+    @GetMapping("/totalByPage")
+    public Result<List<TotalTable>> getByTotalTableByPage(@RequestParam("sign") String sign,
+                                                          @RequestParam("department") String department,
+                                                         @RequestParam("grade") String grade,
+                                                         @RequestParam("pageNum") int pageNum,
+                                                         @RequestParam("pageSize") int pageSize) {
+        List<TotalTable> all;
+        if (Objects.equals(sign, "byDept")) {
             all = getByDeptTable(grade);
+        } else if (Objects.equals(sign, "byMajor")) {
+            all = getByMajorTable(department, grade);
+        } else if (Objects.equals(sign, "byType")) {
+            all = getByTypeTable(department, grade);
+        } else if (Objects.equals(sign, "byPosition")){
+            all = getByPositionTable(department, grade);
+        } else {
+            all = getEmplInfoTotalTable(department, grade);
         }
         // 计算当前页的起始索引和结束索引
         int startIndex = (pageNum - 1) * pageSize;
