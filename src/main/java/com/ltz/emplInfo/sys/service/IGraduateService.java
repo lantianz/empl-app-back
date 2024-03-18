@@ -30,4 +30,6 @@ public interface IGraduateService extends IService<Graduate> {
     boolean editByList(List<String> ids, String password);
 
     List<Graduate> getDeptGraduateBySearch(String dept);
+
+    String login(Graduate graduate);
 }
