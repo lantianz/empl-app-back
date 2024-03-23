@@ -130,7 +130,7 @@ public class AppController {
     @PostMapping("/add")
     public Result<String> addCheck(@RequestBody EmplInfoCheck emplInfoCheck) {
         convertEmplInfoCheck(emplInfoCheck);
-        boolean added = emplInfoCheckService.delete(emplInfoCheck.getStudentId());
+        boolean added = emplInfoCheckService.add(emplInfoCheck);
         if (added) {
             return Result.success("成功");
         } else {
@@ -142,7 +142,7 @@ public class AppController {
     @PostMapping("/reAdd")
     public Result<String> reAddCheck(@RequestBody EmplInfoCheck emplInfoCheck) {
         convertEmplInfoCheck(emplInfoCheck);
-        boolean deleted = emplInfoCheckService.add(emplInfoCheck);
+        boolean deleted = emplInfoCheckService.delete(emplInfoCheck.getStudentId());
         if (deleted) {
             return Result.success("成功");
         } else {
