@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author tianzhi
@@ -35,7 +35,7 @@ public class StandInfoController {
         // 遍历数据列表，进行过滤
         for (StandInfo standInfo : list) {
             // 过滤非空的字段
-            filterField(filteredFields, "id" ,String.valueOf(standInfo.getId()));
+            filterField(filteredFields, "id", String.valueOf(standInfo.getId()));
             filterField(filteredFields, "department", standInfo.getDepartment());
             filterField(filteredFields, "major", standInfo.getMajor());
             filterField(filteredFields, "company_type", standInfo.getCompanyType());
@@ -47,6 +47,7 @@ public class StandInfoController {
 
         return Result.success(result, "success!!!");
     }
+
     // 过滤非空字段并存储到List中
     private void filterField(Map<String, List<String>> filteredFields, String fieldName, String value) {
         if (!Objects.isNull(value) && !value.equals("")) {

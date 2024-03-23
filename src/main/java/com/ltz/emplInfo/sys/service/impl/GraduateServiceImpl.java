@@ -1,8 +1,8 @@
 package com.ltz.emplInfo.sys.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ltz.emplInfo.sys.entity.Admin;
 import com.ltz.emplInfo.sys.entity.Graduate;
 import com.ltz.emplInfo.sys.mapper.GraduateMapper;
 import com.ltz.emplInfo.sys.service.IGraduateService;
@@ -10,13 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author tianzhi
@@ -76,11 +78,11 @@ public class GraduateServiceImpl extends ServiceImpl<GraduateMapper, Graduate> i
     public String login(Graduate graduate) {
         // 根据用户名和密码查询
         LambdaQueryWrapper<Graduate> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Graduate::getUsername,graduate.getUsername());
-        wrapper.eq(Graduate::getPassword,graduate.getPassword());
+        wrapper.eq(Graduate::getUsername, graduate.getUsername());
+        wrapper.eq(Graduate::getPassword, graduate.getPassword());
         Graduate loginGraduate = this.baseMapper.selectOne(wrapper);
         // 结果不为空，生成token，并将信息存入redis
-        if(loginGraduate != null){
+        if (loginGraduate != null) {
             // UUID
             String key = "graduate:" + UUID.randomUUID();
 
@@ -92,5 +94,29 @@ public class GraduateServiceImpl extends ServiceImpl<GraduateMapper, Graduate> i
             return key;
         }
         return null;
+    }
+
+    @Override
+    public Map<String, Object> getGraduateInfo(String token) {
+        // 根据token获取用户信息
+        Object obj = redisTemplate.opsForValue().get(token);
+        if (obj != null) {
+            Graduate loginGraduate = JSON.parseObject(JSON.toJSONString(obj), Graduate.class);
+            Map<String, Object> data = new HashMap<>();
+            data.put("studentId", loginGraduate.getStudentId());
+            data.put("name", loginGraduate.getName());
+            data.put("gender", loginGraduate.getGender());
+            data.put("grade", loginGraduate.getGrade());
+            data.put("department", loginGraduate.getDepartment());
+            data.put("major", loginGraduate.getMajor());
+
+            return data;
+        }
+        return null;
+    }
+
+    @Override
+    public void logout(String token) {
+        redisTemplate.delete(token);
     }
 }

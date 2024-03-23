@@ -1,14 +1,13 @@
 package com.ltz.emplInfo.sys.service;
 
-import com.ltz.emplInfo.sys.entity.EmplNews;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ltz.emplInfo.sys.entity.Graduate;
+import com.ltz.emplInfo.sys.entity.EmplNews;
 
 import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author tianzhi

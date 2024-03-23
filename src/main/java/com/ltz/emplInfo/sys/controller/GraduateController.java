@@ -1,20 +1,16 @@
 package com.ltz.emplInfo.sys.controller;
 
-import com.ltz.emplInfo.common.vo.AppResult;
 import com.ltz.emplInfo.common.vo.Result;
-import com.ltz.emplInfo.sys.entity.Admin;
 import com.ltz.emplInfo.sys.entity.Graduate;
 import com.ltz.emplInfo.sys.service.IGraduateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author tianzhi
@@ -24,7 +20,7 @@ import java.util.Map;
 @RequestMapping("/api/graduate")
 public class GraduateController {
     @Autowired
-    private IGraduateService  graduateService;
+    private IGraduateService graduateService;
 
     @GetMapping("/getAllUserByPage")
     public Result<List<Graduate>> getAllGraduateByPage(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
@@ -105,14 +101,5 @@ public class GraduateController {
         }
     }
 
-    // App登录
-    @PostMapping("/login")
-    public AppResult<String> login(@RequestBody Graduate graduate){
-        String token = graduateService.login(graduate);
-        if (token != null) {
-            return AppResult.success(20000, "success", 604800, token);
-        } else {
-            return AppResult.fail(20002,"用户名or密码错误", 111111, null);
-        }
-    }
+
 }

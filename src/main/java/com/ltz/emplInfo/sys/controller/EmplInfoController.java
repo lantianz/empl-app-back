@@ -16,6 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
+import static com.ltz.emplInfo.util.Convert.convertEmplInfo;
+
 /**
  * <p>
  * 前端控制器
@@ -115,7 +117,7 @@ public class EmplInfoController {
 
         // 由于数据库中的院系信息存在重复，需要先去重
         List<String> list = new ArrayList<>();
-        for (Graduate graduate:graduateService.list()) {
+        for (Graduate graduate : graduateService.list()) {
             String department = graduate.getDepartment();
             list.add(department);
         }
@@ -126,7 +128,7 @@ public class EmplInfoController {
         // 四舍五入
         df.setRoundingMode(RoundingMode.HALF_UP);
 
-        for (String department:new ArrayList<>(set)) {
+        for (String department : new ArrayList<>(set)) {
             TotalTable byDeptTable = new TotalTable();
             // 院系
             byDeptTable.setDepartments(department);
@@ -153,7 +155,7 @@ public class EmplInfoController {
 
         // 由于数据库中的院系信息存在重复，需要先去重
         List<String> list = new ArrayList<>();
-        for (Graduate graduate:all) {
+        for (Graduate graduate : all) {
             String major = graduate.getMajor();
             list.add(major);
         }
@@ -164,7 +166,7 @@ public class EmplInfoController {
         // 四舍五入
         df.setRoundingMode(RoundingMode.HALF_UP);
 
-        for (String major: new ArrayList<>(set)) {
+        for (String major : new ArrayList<>(set)) {
             TotalTable byMajorTable = new TotalTable();
             // 专业
             byMajorTable.setMajors(major);
@@ -185,13 +187,13 @@ public class EmplInfoController {
 
     @GetMapping("/byType")
     public List<TotalTable> getByTypeTable(@RequestParam("department") String department,
-                                            @RequestParam("grade") String grade) {
+                                           @RequestParam("grade") String grade) {
         List<EmplInfo> all = emplInfoService.list();
         List<TotalTable> byType = new ArrayList<>();
 
         // 由于数据库中的院系信息存在重复，需要先去重
         List<String> list = new ArrayList<>();
-        for (EmplInfo emplInfo:all) {
+        for (EmplInfo emplInfo : all) {
             String companyType = emplInfo.getCompanyType();
             list.add(companyType);
         }
@@ -202,7 +204,7 @@ public class EmplInfoController {
         // 四舍五入
         df.setRoundingMode(RoundingMode.HALF_UP);
 
-        for (String type: new ArrayList<>(set)) {
+        for (String type : new ArrayList<>(set)) {
             TotalTable byTypeTable = new TotalTable();
             // 专业
             byTypeTable.setCompanyType(type);
@@ -230,13 +232,13 @@ public class EmplInfoController {
 
     @GetMapping("/byPosition")
     public List<TotalTable> getByPositionTable(@RequestParam("department") String department,
-                                           @RequestParam("grade") String grade) {
+                                               @RequestParam("grade") String grade) {
         List<EmplInfo> all = emplInfoService.list();
         List<TotalTable> byPosition = new ArrayList<>();
 
         // 由于数据库中的信息存在重复，需要先去重
         List<String> list = new ArrayList<>();
-        for (EmplInfo emplInfo:all) {
+        for (EmplInfo emplInfo : all) {
             String city = emplInfo.getCompanyCity();
             list.add(city);
         }
@@ -260,7 +262,7 @@ public class EmplInfoController {
         // 四舍五入
         df.setRoundingMode(RoundingMode.HALF_UP);
 
-        for (EmplInfo position: positions) {
+        for (EmplInfo position : positions) {
             TotalTable byPositionTable = new TotalTable();
             // 省、市
             byPositionTable.setCompanyProvince(position.getCompanyProvince());
@@ -294,7 +296,7 @@ public class EmplInfoController {
 
         // 由于数据库中的院系信息存在重复，需要先去重
         List<String> list = new ArrayList<>();
-        for (Graduate graduate:graduateService.list()) {
+        for (Graduate graduate : graduateService.list()) {
             String dept = graduate.getDepartment();
             list.add(dept);
         }
@@ -306,22 +308,22 @@ public class EmplInfoController {
         df.setRoundingMode(RoundingMode.HALF_UP);
         // 需要一次获取所有院系则取消注释循环
         // for (String dept:new ArrayList<>(set)) {
-            TotalTable totalTable = new TotalTable();
-            // 毕业生总数
-            int gradeCount = emplInfoService.countOfGraduate(department, "", grade);
-            totalTable.setCountOfGraduate(String.valueOf(gradeCount));
-            // 按时就业人数
-            int countOfOnTime = emplInfoService.countOfOnTime(department, grade);
-            totalTable.setCountOfOnTime(String.valueOf(countOfOnTime));
-            // 毕业两年就业人数
-            int countOfEmployed = emplInfoService.countOfEmployed(department, "", "", "", grade);
-            totalTable.setCountOfEmployed(String.valueOf(countOfEmployed));
-            // 按时就业率
-            totalTable.setEmploymentOnTimeRate(df.format((double) countOfOnTime / gradeCount));
-            // 毕业两年就业率
-            totalTable.setEmploymentRate((df.format((double) countOfEmployed / gradeCount)));
+        TotalTable totalTable = new TotalTable();
+        // 毕业生总数
+        int gradeCount = emplInfoService.countOfGraduate(department, "", grade);
+        totalTable.setCountOfGraduate(String.valueOf(gradeCount));
+        // 按时就业人数
+        int countOfOnTime = emplInfoService.countOfOnTime(department, grade);
+        totalTable.setCountOfOnTime(String.valueOf(countOfOnTime));
+        // 毕业两年就业人数
+        int countOfEmployed = emplInfoService.countOfEmployed(department, "", "", "", grade);
+        totalTable.setCountOfEmployed(String.valueOf(countOfEmployed));
+        // 按时就业率
+        totalTable.setEmploymentOnTimeRate(df.format((double) countOfOnTime / gradeCount));
+        // 毕业两年就业率
+        totalTable.setEmploymentRate((df.format((double) countOfEmployed / gradeCount)));
 
-            infoTotal.add(totalTable);
+        infoTotal.add(totalTable);
         // }
 
         return infoTotal;
@@ -331,9 +333,9 @@ public class EmplInfoController {
     @GetMapping("/totalByPage")
     public Result<List<TotalTable>> getByTotalTableByPage(@RequestParam("sign") String sign,
                                                           @RequestParam("department") String department,
-                                                         @RequestParam("grade") String grade,
-                                                         @RequestParam("pageNum") int pageNum,
-                                                         @RequestParam("pageSize") int pageSize) {
+                                                          @RequestParam("grade") String grade,
+                                                          @RequestParam("pageNum") int pageNum,
+                                                          @RequestParam("pageSize") int pageSize) {
         List<TotalTable> all;
         if (Objects.equals(sign, "byDept")) {
             all = getByDeptTable(grade);
@@ -341,7 +343,7 @@ public class EmplInfoController {
             all = getByMajorTable(department, grade);
         } else if (Objects.equals(sign, "byType")) {
             all = getByTypeTable(department, grade);
-        } else if (Objects.equals(sign, "byPosition")){
+        } else if (Objects.equals(sign, "byPosition")) {
             all = getByPositionTable(department, grade);
         } else {
             all = getEmplInfoTotalTable(department, grade);
@@ -356,61 +358,6 @@ public class EmplInfoController {
         result.setMessage("data1为第 " + pageNum + " 页的结果，data为全部结果");
 
         return result;
-    }
-
-    public static void convertEmplInfo(EmplInfo emplInfo) {
-        // if是"1 or 0"?执行转换"1,0"为"是,否"   else执行转换"是,否"为"1,0"
-        if (Objects.equals(emplInfo.getPostgraduate(), "1") || Objects.equals(emplInfo.getPostgraduate(), "0")) {
-            // postgraduate转换
-            if (Objects.equals(emplInfo.getPostgraduate(), "1")) {
-                emplInfo.setPostgraduate("是");
-            } else if (Objects.equals(emplInfo.getPostgraduate(), "0")) {
-                emplInfo.setPostgraduate("否");
-            } else {
-                emplInfo.setPostgraduate("");
-            }
-            // emplOntime转换
-            if (Objects.equals(emplInfo.getEmplOntime(), "1")) {
-                emplInfo.setEmplOntime("是");
-            } else if (Objects.equals(emplInfo.getEmplOntime(), "0")) {
-                emplInfo.setEmplOntime("否");
-            } else {
-                emplInfo.setEmplOntime("");
-            }
-            // emplWithintwo转换
-            if (Objects.equals(emplInfo.getEmplWithintwo(), "1")) {
-                emplInfo.setEmplWithintwo("是");
-            } else if (Objects.equals(emplInfo.getEmplWithintwo(), "0")) {
-                emplInfo.setEmplWithintwo("否");
-            } else {
-                emplInfo.setEmplWithintwo("");
-            }
-        } else {
-            // postgraduate转换
-            if (Objects.equals(emplInfo.getPostgraduate(), "是")) {
-                emplInfo.setPostgraduate("1");
-            } else if (Objects.equals(emplInfo.getPostgraduate(), "否")) {
-                emplInfo.setPostgraduate("0");
-            } else {
-                emplInfo.setPostgraduate("");
-            }
-            // emplOntime转换
-            if (Objects.equals(emplInfo.getEmplOntime(), "是")) {
-                emplInfo.setEmplOntime("1");
-            } else if (Objects.equals(emplInfo.getEmplOntime(), "否")) {
-                emplInfo.setEmplOntime("0");
-            } else {
-                emplInfo.setEmplOntime("");
-            }
-            // emplWithintwo转换
-            if (Objects.equals(emplInfo.getEmplWithintwo(), "是")) {
-                emplInfo.setEmplWithintwo("1");
-            } else if (Objects.equals(emplInfo.getEmplWithintwo(), "否")) {
-                emplInfo.setEmplWithintwo("0");
-            } else {
-                emplInfo.setEmplWithintwo("");
-            }
-        }
     }
 
 }

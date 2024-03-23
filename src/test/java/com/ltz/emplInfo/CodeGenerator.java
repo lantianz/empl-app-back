@@ -8,15 +8,14 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import java.sql.Types;
 import java.util.Collections;
 
-public class CodeGenerator
-{
-    public static void main(String[] args){
+public class CodeGenerator {
+    public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Shanghai";
         String username = "root";
         String password = "123456";
         String moduleName = "sys";
         String mapperLocation = "D:\\IdeaProjects\\emplInfo\\src\\main\\resources\\mapper\\" + moduleName;
-        String tables = "empl_news";   //admin_role role
+        String tables = "empl_info_check";   //需要生成的表
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> {
                     builder.author("tianzhi") // 设置作者

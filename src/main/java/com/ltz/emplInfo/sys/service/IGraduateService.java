@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.ltz.emplInfo.sys.entity.Graduate;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author tianzhi
@@ -32,4 +33,8 @@ public interface IGraduateService extends IService<Graduate> {
     List<Graduate> getDeptGraduateBySearch(String dept);
 
     String login(Graduate graduate);
+
+    Map<String, Object> getGraduateInfo(String token);
+
+    void logout(String token);
 }

@@ -5,7 +5,7 @@ import com.ltz.emplInfo.sys.entity.StandInfo;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author tianzhi

@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -18,7 +17,7 @@ import java.time.LocalDateTime;
  * @since 2024-03-18
  */
 @TableName("empl_news")
-public class EmplNews implements Serializable {
+public class EmplNews implements Serializable, Comparable<EmplNews> {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,6 +32,8 @@ public class EmplNews implements Serializable {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     private LocalDateTime sendTime;
+
+    private String frontImg;
 
     private String content;
 
@@ -76,6 +77,14 @@ public class EmplNews implements Serializable {
         this.sendTime = sendTime;
     }
 
+    public String getFrontImg() {
+        return frontImg;
+    }
+
+    public void setFrontImg(String frontImg) {
+        this.frontImg = frontImg;
+    }
+
     public String getContent() {
         return content;
     }
@@ -92,7 +101,19 @@ public class EmplNews implements Serializable {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", sendTime=" + sendTime +
+                ", frontImg='" + frontImg + '\'' +
                 ", content='" + content + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(EmplNews o) {
+        if (o.sendTime.isEqual(this.sendTime)) {
+            return 0;
+        } else if (o.sendTime.isAfter(this.sendTime)) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }

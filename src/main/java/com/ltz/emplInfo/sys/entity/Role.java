@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author tianzhi
@@ -47,9 +47,9 @@ public class Role implements Serializable {
     @Override
     public String toString() {
         return "Role{" +
-            "roleId = " + roleId +
-            ", roleName = " + roleName +
-            ", roleDesc = " + roleDesc +
-        "}";
+                "roleId = " + roleId +
+                ", roleName = " + roleName +
+                ", roleDesc = " + roleDesc +
+                "}";
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ltz.emplInfo.sys.mapper.EmplInfoCheckMapper">
+    <select id="getByStudentId" parameterType="String" resultType="com.ltz.emplInfo.sys.entity.EmplInfoCheck">
+        SELECT *
+        FROM empl_info_check
+        WHERE student_id = #{studentId}
+    </select>
+    <insert id="add" parameterType="com.ltz.emplInfo.sys.entity.EmplInfoCheck">
+        INSERT INTO empl_info_check (student_id, company_name, company_type, company_province, company_city,
+                                     sign_date, postgraduate, empl_ontime, empl_withintwo, status, idea_comment)
+        SELECT #{studentId},
+               #{companyName},
+               #{companyType},
+               #{companyProvince},
+               #{companyCity},
+               #{signDate},
+               #{postgraduate},
+               #{emplOntime},
+               #{emplWithintwo},
+               #{status},
+               #{ideaComment}
+        FROM dual
+        WHERE EXISTS (SELECT 1 FROM graduate WHERE student_id = #{studentId})
+          AND NOT EXISTS (SELECT 1 FROM empl_info WHERE student_id = #{studentId})
+          AND NOT EXISTS (SELECT 1 FROM empl_info_check WHERE student_id = #{studentId})
+    </insert>
+    <delete id="delete" parameterType="String">
+        DELETE
+        FROM empl_info_check
+        WHERE student_id = #{studentId}
+    </delete>
+    <update id="edit" parameterType="com.ltz.emplInfo.sys.entity.EmplInfoCheck">
+        UPDATE empl_info_check
+        SET company_name     = #{companyName},
+            company_type     = #{companyType},
+            company_province = #{companyProvince},
+            company_city     = #{companyCity},
+            sign_date        = #{signDate},
+            postgraduate     = #{postgraduate},
+            empl_ontime      = #{emplOntime},
+            empl_withintwo   = #{emplWithintwo},
+            status           = #{status},
+            idea_comment     = #{ideaComment}
+        WHERE student_id = #{studentId}
+    </update>
+</mapper>

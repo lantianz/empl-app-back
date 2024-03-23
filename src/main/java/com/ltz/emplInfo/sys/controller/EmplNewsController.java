@@ -2,17 +2,15 @@ package com.ltz.emplInfo.sys.controller;
 
 import com.ltz.emplInfo.common.vo.Result;
 import com.ltz.emplInfo.sys.entity.EmplNews;
-import com.ltz.emplInfo.sys.entity.Graduate;
 import com.ltz.emplInfo.sys.service.IEmplNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author tianzhi
@@ -34,13 +32,15 @@ public class EmplNewsController {
         return result;
     }
 
+
     @GetMapping("/getEmplNewsBySearch")
     public Result<List<EmplNews>> getEmplNewsBySearch(@RequestParam("keyword") String keyword) {
         List<EmplNews> list = emplNewsService.getEmplNewsBySearch(keyword);
         Result<List<EmplNews>> result = new Result<>();
         result.setData(list);
         result.setTotal(list.size());
-        result.setMessage("全部就业资讯");
+        result.setCode(20000);
+        result.setMessage("搜索到" + list.size() + "条结果");
         return result;
     }
 

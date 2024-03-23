@@ -1,58 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ltz.emplInfo.sys.mapper.GraduateMapper">
-<!--    查询所有-->
+    <!--    查询所有-->
     <select id="getAllGraduate" resultType="com.ltz.emplInfo.sys.entity.Graduate">
-        SELECT student_id, name, gender, department, major, grade, username FROM graduate
+        SELECT student_id, name, gender, department, major, grade, username
+        FROM graduate
     </select>
-<!--    查找-->
+    <!--    查找-->
     <select id="getGraduateBySearch" parameterType="String" resultType="com.ltz.emplInfo.sys.entity.Graduate">
-        SELECT student_id, name, gender, department, major, grade, username FROM graduate
+        SELECT student_id, name, gender, department, major, grade, username
+        FROM graduate
         WHERE name LIKE CONCAT('%', #{keyword}, '%')
            OR student_id LIKE CONCAT('%', #{keyword}, '%')
     </select>
-<!--    院系查找-->
+    <!--    院系查找-->
     <select id="getDeptGraduateBySearch" parameterType="String" resultType="com.ltz.emplInfo.sys.entity.Graduate">
-        SELECT student_id, name, gender, department, major, grade, username FROM graduate
+        SELECT student_id, name, gender, department, major, grade, username
+        FROM graduate
         WHERE department = #{keyword}
     </select>
-<!--    分页-->
+    <!--    分页-->
     <select id="getGraduatesByPage" resultType="com.ltz.emplInfo.sys.entity.Graduate">
-        SELECT student_id, name, gender, department, major, grade, username FROM graduate LIMIT #{startIndex}, #{pageSize}
+        SELECT student_id, name, gender, department, major, grade, username
+        FROM graduate LIMIT #{startIndex}, #{pageSize}
     </select>
-<!--    添加-->
+    <!--    添加-->
     <insert id="add" parameterType="com.ltz.emplInfo.sys.entity.Graduate">
         INSERT INTO graduate (student_id, name, gender, department, major, grade, username, password)
-        SELECT #{studentId}, #{name}, #{gender}, #{department}, #{major}, #{grade}, #{username}, #{password}
+        SELECT #{studentId},
+               #{name},
+               #{gender},
+               #{department},
+               #{major},
+               #{grade},
+               #{username},
+               #{password}
         FROM dual
-        WHERE NOT EXISTS (
-            SELECT 1
-            FROM graduate
-            WHERE student_id = #{studentId}
-        )
+        WHERE NOT EXISTS (SELECT 1
+                          FROM graduate
+                          WHERE student_id = #{studentId})
     </insert>
-<!--    通过ID删除-->
+    <!--    通过ID删除-->
     <delete id="deleteById" parameterType="String">
-        DELETE FROM graduate
+        DELETE
+        FROM graduate
         WHERE student_id = #{deleteId}
     </delete>
-<!--    编辑并更新-->
+    <!--    编辑并更新-->
     <update id="editById" parameterType="com.ltz.emplInfo.sys.entity.Graduate">
         UPDATE graduate
-        SET name = #{name},
-            gender = #{gender},
+        SET name       = #{name},
+            gender     = #{gender},
             department = #{department},
-            major = #{major},
-            grade = #{grade},
-            username = #{username},
-            password = IFNULL (#{password}, password)
+            major      = #{major},
+            grade      = #{grade},
+            username   = #{username},
+            password   = IFNULL(#{password}, password)
         WHERE student_id = #{studentId}
     </update>
-<!--    分配账号-->
+    <!--    分配账号-->
     <update id="editByList" parameterType="com.ltz.emplInfo.sys.entity.Graduate">
         UPDATE graduate
         SET username = student_id,
-            `password` = #{password}
+        `password` = #{password}
         WHERE student_id IN
         <foreach collection="ids" item="id" separator="," open="(" close=")">
             #{id}

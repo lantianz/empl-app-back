@@ -22,13 +22,13 @@ import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 @Configuration
-public class MyRedisConfig{
+public class MyRedisConfig {
 
     @Resource
     private RedisConnectionFactory factory;
 
     @Bean
-    public RedisTemplate redisTemplate(){
+    public RedisTemplate redisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);
 

@@ -1,14 +1,14 @@
 package com.ltz.emplInfo.sys.mapper;
 
-import com.ltz.emplInfo.sys.entity.EmplNews;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ltz.emplInfo.sys.entity.EmplNews;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author tianzhi

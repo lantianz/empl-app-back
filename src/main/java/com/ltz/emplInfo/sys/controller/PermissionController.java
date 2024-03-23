@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author tianzhi
@@ -25,7 +25,7 @@ public class PermissionController {
     private IPermissionService permissionService;
 
     @PostMapping("/getMenu/{roleId}")
-    public List<Permission> getMenu(@PathVariable("roleId") Integer roleId){
+    public List<Permission> getMenu(@PathVariable("roleId") Integer roleId) {
         List<Permission> permissions = permissionService.getMenu(roleId);
         List<Permission> data = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class PermissionController {
 
         // 遍历Permission对象列表获取没有children的项
         for (Permission permission : permissions) {
-            if (permission.getParentId() != 0 ) {
+            if (permission.getParentId() != 0) {
                 // 有children的项的parent_id集合
                 parent_id.add(permission.getParentId());
                 // 将所有children的项添加到childrenList中
@@ -57,13 +57,13 @@ public class PermissionController {
         List<Integer> list = new ArrayList<>(set);
         // 将分组存在对应的children中
         for (Permission permission : permissions) {
-            for (Integer id:list) {
+            for (Integer id : list) {
                 if (Objects.equals(permission.getId(), id)) {
                     permission.setChildren(childrenMap.get(id));
                     data.add(permission);
                 }
             }
-            if (permission.getParentId() == 0 &&  permission.getChildren() == null) {
+            if (permission.getParentId() == 0 && permission.getChildren() == null) {
                 data.add(permission);
             }
         }

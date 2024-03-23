@@ -93,13 +93,13 @@ public class StandInfo implements Serializable {
     @Override
     public String toString() {
         return "StandInfo{" +
-            "id = " + id +
-            ", department = " + department +
-            ", major = " + major +
-            ", companyType = " + companyType +
-            ", province = " + province +
-            ", city = " + city +
-            ", grade = " + grade +
-        "}";
+                "id = " + id +
+                ", department = " + department +
+                ", major = " + major +
+                ", companyType = " + companyType +
+                ", province = " + province +
+                ", city = " + city +
+                ", grade = " + grade +
+                "}";
     }
 }

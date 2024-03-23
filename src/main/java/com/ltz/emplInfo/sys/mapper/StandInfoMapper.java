@@ -5,7 +5,7 @@ import com.ltz.emplInfo.sys.entity.StandInfo;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author tianzhi

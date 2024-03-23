@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author tianzhi
@@ -37,11 +37,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public String login(Admin admin) {
         // 根据用户名和密码查询
         LambdaQueryWrapper<Admin> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Admin::getUsername,admin.getUsername());
-        wrapper.eq(Admin::getPassword,admin.getPassword());
+        wrapper.eq(Admin::getUsername, admin.getUsername());
+        wrapper.eq(Admin::getPassword, admin.getPassword());
         Admin loginAdmin = this.baseMapper.selectOne(wrapper);
         // 结果不为空，生成token，并将信息存入redis
-        if(loginAdmin != null){
+        if (loginAdmin != null) {
             // UUID
             String key = "admin:" + UUID.randomUUID();
 
@@ -59,7 +59,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public Map<String, Object> getAdminInfo(String token) {
         // 根据token获取用户信息
         Object obj = redisTemplate.opsForValue().get(token);
-        if(obj != null){
+        if (obj != null) {
             Admin loginAdmin = JSON.parseObject(JSON.toJSONString(obj), Admin.class);
             Map<String, Object> data = new HashMap<>();
             data.put("jobId", loginAdmin.getJobId());

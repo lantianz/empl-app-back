@@ -13,7 +13,7 @@ import java.util.Objects;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author tianzhi
@@ -25,28 +25,22 @@ public class AdminController {
     @Autowired
     private IAdminService adminService;
 
-    @GetMapping("/all")
-    public Result<List<Admin>> getAllAdmin(){
-        List<Admin> list = adminService.list();
-        return Result.success(list,"success!!!");
-    }
-
     @PostMapping("/login")
-    public Result<Map<String,Object>> login(@RequestBody Admin admin){
-        Map<String,Object> data = new HashMap<>();
+    public Result<Map<String, Object>> login(@RequestBody Admin admin) {
+        Map<String, Object> data = new HashMap<>();
         String token = adminService.login(admin);
-        data.put("token",token);
+        data.put("token", token);
         if (token != null) {
             data.put("info", adminService.getAdminInfo(token));
             return Result.success(data);
         } else {
-            return Result.fail(20002,"用户名or密码错误");
+            return Result.fail(20002, "用户名or密码错误");
         }
     }
 
     @GetMapping("/check")   //验证token是否过期
-    public Result<Map<String,Object>> check(@RequestHeader("A-Token") String token){
-        Map<String,Object> data = adminService.getAdminInfo(token);
+    public Result<Map<String, Object>> check(@RequestHeader("A-Token") String token) {
+        Map<String, Object> data = adminService.getAdminInfo(token);
         if (data != null) {
             return Result.success();
         } else {
@@ -55,19 +49,20 @@ public class AdminController {
     }
 
     @PostMapping("/logout")
-    public Result<?> logout(@RequestHeader("A-Token") String token){
+    public Result<?> logout(@RequestHeader("A-Token") String token) {
         adminService.logout(token);
         return Result.success();
     }
 
     @GetMapping("/allDeptAdmin")
-    public Result<List<Admin>> getAllDeptAdmin(){
+    public Result<List<Admin>> getAllDeptAdmin() {
         List<Admin> list = adminService.getDeptAdmin(3);
         Result<List<Admin>> result = new Result<>();
         result.setData(list);
         result.setTotal(list.size());
         return result;
     }
+
     @GetMapping("/getDeptAdminBySearch")
     public Result<List<Admin>> getDeptAdminBySearch(@RequestParam("keyword") String keyword) {
         List<Admin> list = adminService.getDeptAdminBySearch(keyword);

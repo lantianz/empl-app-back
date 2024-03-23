@@ -4,8 +4,8 @@
     <select id="getMenu" resultType="com.ltz.emplInfo.sys.entity.Permission">
         SELECT DISTINCT p.*
         FROM role r
-                JOIN role_permission rp ON rp.role_id = #{roles} AND r.role_id = #{roles}
-                JOIN permission p ON rp.permission_id = p.id;
+                 JOIN role_permission rp ON rp.role_id = #{roles} AND r.role_id = #{roles}
+                 JOIN permission p ON rp.permission_id = p.id;
 
     </select>
 </mapper>

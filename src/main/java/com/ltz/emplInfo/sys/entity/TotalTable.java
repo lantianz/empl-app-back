@@ -10,7 +10,7 @@ public class TotalTable {
 
     private String departments;
 
-    private  String majors;
+    private String majors;
 
     private String countOfGraduate;
 
@@ -33,6 +33,7 @@ public class TotalTable {
     private String allInDeptRate;   // 该类型该院系 比上 对应全类型该院系, (该地区)
 
     private String allInAllDeptRate;   // 该类型全院系 比上 对应全类型全院系, (该地区)
+
     public String getCompanyType() {
         return companyType;
     }

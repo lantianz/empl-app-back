@@ -3,41 +3,45 @@
 <mapper namespace="com.ltz.emplInfo.sys.mapper.AdminMapper">
     <!-- 权限查询 -->
     <select id="getRoleByUserId" parameterType="Integer" resultType="com.ltz.emplInfo.sys.entity.Role">
-        SELECT
-            b.role_id, b.role_name, b.role_desc
-        FROM admin_role a, role b
-        WHERE
-            a.role_id = b.`role_id`
+        SELECT b.role_id,
+               b.role_name,
+               b.role_desc
+        FROM admin_role a,
+             role b
+        WHERE a.role_id = b.`role_id`
           AND a.admin_id = #{adminId}
     </select>
     <!-- 获取全部负责人信息（除了密码） -->
     <select id="getDeptAdmin" parameterType="Integer" resultType="com.ltz.emplInfo.sys.entity.Admin">
-        SELECT
-            admin_id, job_id, name, phone, email, username
+        SELECT admin_id,
+               job_id,
+               name,
+               phone,
+               email,
+               username
         FROM `admin`
-        WHERE
-            admin_id = #{adminId}
+        WHERE admin_id = #{adminId}
     </select>
     <!--查找-->
     <select id="getDeptAdminBySearch" parameterType="String" resultType="com.ltz.emplInfo.sys.entity.Admin">
-        SELECT * FROM `admin`
+        SELECT *
+        FROM `admin`
         WHERE job_id LIKE CONCAT('%', #{keyword}, '%')
            OR name LIKE CONCAT('%', #{keyword}, '%')
     </select>
     <!--添加-->
     <insert id="add" parameterType="com.ltz.emplInfo.sys.entity.Admin">
-        INSERT INTO `admin` ( admin_id, job_id, name, phone, email, username, password)
-        SELECT 3, #{jobId}, #{name}, #{phone},#{email}, #{username}, #{password}
+        INSERT INTO `admin` (admin_id, job_id, name, phone, email, username, password)
+        SELECT 3, #{jobId}, #{name}, #{phone}, #{email}, #{username}, #{password}
         FROM dual
-        WHERE NOT EXISTS (
-            SELECT 1
-            FROM `admin`
-            WHERE job_id = #{jobId}
-        )
+        WHERE NOT EXISTS (SELECT 1
+                          FROM `admin`
+                          WHERE job_id = #{jobId})
     </insert>
     <!--通过ID删除-->
     <delete id="deleteById" parameterType="java.lang.String">
-        DELETE FROM `admin`
+        DELETE
+        FROM `admin`
         WHERE job_id = #{id}
 
     </delete>
@@ -52,26 +56,24 @@
     <!--编辑并更新-->
     <update id="editById" parameterType="com.ltz.emplInfo.sys.entity.Admin">
         UPDATE `admin`
-        SET job_id = #{jobId},
-            name = #{name},
-            phone = #{phone},
-            email = #{email},
+        SET job_id   = #{jobId},
+            name     = #{name},
+            phone    = #{phone},
+            email    = #{email},
             username = #{username},
-            password = IFNULL (#{password}, password)
+            password = IFNULL(#{password}, password)
         WHERE job_id = #{jobId}
     </update>
     <!--通过jobId获取数据-->
     <select id="getAdminByJobId" parameterType="String" resultType="com.ltz.emplInfo.sys.entity.Admin">
-        SELECT
-            *
+        SELECT *
         FROM `admin`
-        WHERE
-            job_id = #{jobId}
+        WHERE job_id = #{jobId}
     </select>
     <!-- 更改密码 -->
     <update id="editPwdById" parameterType="com.ltz.emplInfo.sys.entity.Admin">
         UPDATE `admin`
-        SET password = IFNULL (#{password}, password)
+        SET password = IFNULL(#{password}, password)
         WHERE job_id = #{jobId}
     </update>
 </mapper>

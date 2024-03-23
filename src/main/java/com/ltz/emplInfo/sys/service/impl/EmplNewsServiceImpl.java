@@ -1,11 +1,9 @@
 package com.ltz.emplInfo.sys.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ltz.emplInfo.sys.entity.EmplNews;
-import com.ltz.emplInfo.sys.entity.Graduate;
-import com.ltz.emplInfo.sys.mapper.EmplInfoMapper;
 import com.ltz.emplInfo.sys.mapper.EmplNewsMapper;
 import com.ltz.emplInfo.sys.service.IEmplNewsService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author tianzhi
