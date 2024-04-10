@@ -66,7 +66,7 @@ public class AppController {
             result.setPage(data);
         } else {
             result.setCode(20002);
-            result.setMsg("用户名or密码错误");
+            result.setMsg("账号or密码错误");
             result.setExpire(0);
             result.setData(null);
         }

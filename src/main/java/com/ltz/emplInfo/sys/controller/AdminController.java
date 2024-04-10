@@ -34,7 +34,7 @@ public class AdminController {
             data.put("info", adminService.getAdminInfo(token));
             return Result.success(data);
         } else {
-            return Result.fail(20002, "用户名or密码错误");
+            return Result.fail(20002, "账号or密码错误");
         }
     }
 

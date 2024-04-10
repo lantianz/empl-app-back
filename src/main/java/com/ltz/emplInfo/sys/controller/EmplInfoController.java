@@ -216,13 +216,14 @@ public class EmplInfoController {
             // 计算百分比
             byTypeTable.setAllInDeptRate(df.format((double) typeCount / allTypeCount));
 
-            // 该类型 全院系就业人数
-            int typeCount1 = emplInfoService.countOfEmployed("", "", type, "", grade);
-            byTypeTable.setCountOfAllTypeEmpl(String.valueOf(typeCount1));
-            // 全类型 全院系就业人数
-            int allTypeCount1 = emplInfoService.countOfEmployed("", "", "", "", grade);
-            // 计算百分比
-            byTypeTable.setAllInAllDeptRate(df.format((double) typeCount1 / allTypeCount1));
+            // 总签约人数
+            int allSignPerson = emplInfoService.countOfEmployed(department, "", "", "", grade);
+            byTypeTable.setCountOfEmployed(String.valueOf(allSignPerson));
+            // 总毕业生人数
+            int allGraduatePerson = emplInfoService.countOfGraduate(department, "", grade);
+            byTypeTable.setCountOfGraduate(String.valueOf(allGraduatePerson));
+            // 签约百分比
+            byTypeTable.setEmploymentRate(df.format((double) allSignPerson / allGraduatePerson));
 
             byType.add(byTypeTable);
         }
@@ -275,13 +276,14 @@ public class EmplInfoController {
             // 计算百分比
             byPositionTable.setAllInDeptRate(df.format((double) cityCount / allCityCount));
 
-            // 该市 全院系就业人数
-            int cityCount1 = emplInfoService.countOfEmployed("", "", "", position.getCompanyCity(), grade);
-            byPositionTable.setCountOfAllPositionEmpl(String.valueOf(cityCount1));
-            // 全市 全院系就业人数
-            int allCityCount1 = emplInfoService.countOfEmployed("", "", "", "", grade);
-            // 计算百分比
-            byPositionTable.setAllInAllDeptRate(df.format((double) cityCount1 / allCityCount1));
+            // 总签约人数
+            int allSignPerson = emplInfoService.countOfEmployed(department, "", "", "", grade);
+            byPositionTable.setCountOfEmployed(String.valueOf(allSignPerson));
+            // 总毕业生人数
+            int allGraduatePerson = emplInfoService.countOfGraduate(department, "", grade);
+            byPositionTable.setCountOfGraduate(String.valueOf(allGraduatePerson));
+            // 签约百分比
+            byPositionTable.setEmploymentRate(df.format((double) allSignPerson / allGraduatePerson));
 
             byPosition.add(byPositionTable);
         }
