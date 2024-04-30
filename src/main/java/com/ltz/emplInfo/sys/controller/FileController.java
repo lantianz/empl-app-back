@@ -5,6 +5,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.StrUtil;
 import com.ltz.emplInfo.common.vo.Result;
+import com.ltz.emplInfo.util.IPUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -82,7 +83,8 @@ public class FileController {
         }
         Map<String, Object> resMap = new HashMap<>();
 //        String ip = "http://127.0.0.1:8888/";
-        String ip = "http://192.168.124.3:8888/";
+        IPUtil ipUtil = new IPUtil();
+        String ip = "http://"+ipUtil.getIP()+":8888/";
         resMap.put("errno", 0);
         resMap.put("data", CollUtil.newArrayList(Dict.create()
                 .set("url", ip + "api/files/download/" + flag)

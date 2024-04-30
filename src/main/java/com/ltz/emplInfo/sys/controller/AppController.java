@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.*;
 
 import static com.ltz.emplInfo.util.Convert.convertEmplInfo;
 import static com.ltz.emplInfo.util.Convert.convertEmplInfoCheck;
@@ -51,6 +51,7 @@ public class AppController {
         Map<String, Object> data = graduateService.getGraduateInfo(token);
         return data != null;
     }
+
 
     // App登录
     @PostMapping("/login")
